@@ -6,6 +6,7 @@
 
 这个是我们写的一个openresty lua模块化开发的框架，用来简化nginx的配置、规范开发过程、降低开发难度、减少代码耦合性、提高多人协同工作等。
 这个版本暂时只支持rewrite、access、content、header_filter、body_filter、log、balance这些handler，init和init_work也可以通过类似的方式实现，如果需要请自行处理。这里为了简单明了的给大家一个框架方案，就没有包含这部分。
+
 希望对大家有帮助，也欢迎大家讨论、交流，联系方式见下方。
 
 # 联系作者
