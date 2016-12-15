@@ -2,23 +2,20 @@
 
 遵循**Openresty**的开源协议，欢迎大家转载、使用，转载请注明来源 https://github.com/BBD-RD/openresty-smart-panda/。
 
-
-
 # 说明
 
-由于openresty不支持在同一location同一阶段进行多个lua模块并行处理，为了保证lua模块之间的独立性，为了可以批量执行lua模块的逻辑，所以设计了该模块化方式。 欢迎大家交流，联系方式见下方。
-
-
+这个是我们写的一个openresty lua模块化开发的框架，用来简化nginx的配置、规范开发过程、降低开发难度、减少代码耦合性、提高多人协同工作等。
+balance
+这个版本暂时只支持rewrite、access、content、header_filter、body_filter、log、balance这些handler，init和init_work也可以通过类似的方式实现，如果需要请自行处理。这里为了简单明了的给大家一个框架方案，就没有包含这部分。
+希望对大家有帮助，也欢迎大家讨论、交流，联系方式见下方。
 
 # 联系作者
 
 liang.li@sinobbd.com 李亮
 
-
-
 yu.dong@sinobbd.com 董宇
 
-
+jianwei.wang@sinobbd.com 王建伟
 
 # 模块化使用以及编译安装
 
@@ -26,15 +23,11 @@ yu.dong@sinobbd.com 董宇
 
 git clone https://github.com/BBD-RD/openresty-smart-panda
 
-
-
 ## 2. 代码文件夹结构
 
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BB%93%E6%9E%84.png)
 
-
 ```
-
 configure文件       ：一键编译安装脚本
 
 lua-module-master  ：lua模块化实现文件夹
@@ -137,7 +130,7 @@ process_module     模块化实现，存放各个阶段实现代码
 
 **分三部分：nginx配置、模块化配置、模块配置(用上述hello 模块作为示例)**
 
-##### (1)nginx 配置： 
+##### (1)nginx 配置：
 
     lua_package_path "/usr/local/openresty/nginx/lua_modules/?.lua;?.lua;/usr/local/openresty/lualib/?.lua;";
 
