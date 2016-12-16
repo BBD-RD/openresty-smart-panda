@@ -142,8 +142,8 @@ make && make install
 ##### (1)nginx 配置：nginx安装目录下的nginx.conf
 
 
-    lua_package_path "/usr/local/openresty/nginx/lua_modules/?.lua;?.lua;/usr/local/openresty/lualib/?.lua;";
-
+    lua_package_path "/usr/local/openresty/nginx/lua_modules/?.lua;?.lua;/usr/local/openresty/lualib/?.lua;";
+    
     lua_code_cache   on;
 
 
