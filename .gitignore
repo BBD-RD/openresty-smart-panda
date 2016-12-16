@@ -1,2 +1,3 @@
-openresty/build/
 ._*
+!openresty/
+openresty/build/
