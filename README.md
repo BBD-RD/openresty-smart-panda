@@ -84,7 +84,7 @@ hello_body_content_handle函数为暴露给模块化的入口函数
 ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E6%88%AA%E5%9B%BE.png)
 
 如何注册hello_header 以及hello_body模块:
-![image](https://github.com/BBD-RD/pictures_for_md/blob/master/modules%20%E6%B7%BB%E5%8A%A0.png)
+![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E4%BF%AE%E6%AD%A3.png)
 
 ######   (4)使用时需要配置模块化配置，规则如下图所示。
 模块化配置文件module_conf:
