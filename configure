@@ -1,0 +1,83 @@
+#!/bin/bash
+#########################################################################
+# Author: DongYu 350334147@qq.com
+# Created Time: Tue. 06 DEC 2016 09:32:08 AM CST
+# File Name: configure.sh
+# Description:
+#########################################################################
+
+#添加模块请修改此处
+MODULES="--without-http_redis2_module \
+    --with-http_iconv_module \
+    --with-luajit"
+
+PREFIX=
+opt=
+USAGE="off"
+
+for option
+do
+    opt="$opt `echo $option | sed -e \"s/\(--[^=]*=\)\(.* .*\)/\1'\2'/\"`"
+
+    case "$option" in
+        -*=*) value=`echo "$option" | sed -e 's/[-_a-zA-Z0-9]*=//'` ;;
+           *) value="" ;;
+    esac
+
+    case "$option" in
+
+	    --prefix=)                       PREFIX="!"             ;;
+        --prefix=*)                      PREFIX="$value"        ;;
+        --help)                          USAGE="on"             ;;
+
+    *)
+        USAGE="on"                                              ;;
+    esac
+done
+
+if [ $USAGE = "on" ]; then
+    echo "   supported options:"
+    echo "     --prefix=path (settting the install target, default as /usr/local/openresty)"
+    exit 1
+fi
+
+if [ ".$PREFIX" = "." ]; then
+    PREFIX=/usr/local/openresty
+fi
+
+cd openresty
+
+chmod +x configure
+
+#添加模块请修改此处
+./configure --prefix=$PREFIX $MODULES
+
+cd ..
+#源码修改在此处完成
+
+
+#生成Makefile
+rm -rf Makefile
+#all make
+cat << END >> Makefile
+
+.PHONY: all install clean
+
+all:
+	
+	cd openresty && \$(MAKE)
+	
+install:
+
+	cd openresty && \$(MAKE) install DESTDIR=\$(DESTDIR)
+
+	test -d \$(DESTDIR)${PREFIX}/nginx/lua_modules || cp -vrf lua-module-master/ \$(DESTDIR)${PREFIX}/nginx/lua_modules/
+
+	
+
+clean:
+	
+	cd openresty && make clean
+	
+END
+
