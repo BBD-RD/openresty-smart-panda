@@ -17,8 +17,7 @@ yu.dong@sinobbd.com 董宇
 
 jianwei.wang@sinobbd.com 王建伟
 
-# 模块化使用以及编译安装
-
+# 安装及使用
 ## 1. 下载代码
 
 git clone https://github.com/BBD-RD/openresty-smart-panda
