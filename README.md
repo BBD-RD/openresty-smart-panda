@@ -113,6 +113,8 @@ hello_body_content_handle函数为暴露给模块化的入口函数
 
 开发的模块也可以不使用配置，只需要在module_conf 中将配置设定为nil即可
 
+配置文件名称可以自定义，与module_conf中配置的相同即可
+
 ```
 
 ## 4. 编译安装
@@ -138,9 +140,9 @@ make && make install
 
 **分三部分：nginx配置、模块化配置、模块配置(用上述hello 模块作为示例)**
 
-##### (1)nginx 配置：
+##### (1)nginx 配置：nginx安装目录下的nginx.conf
 
-    lua_package_path "/usr/local/openresty/nginx/lua_modules/?.lua;?.lua;/usr/local/openresty/lualib/?.lua;";
+    lua_package_path "/usr/local/openresty/nginx/lua_modules/?.lua;?.lua;/usr/local/openresty/lualib/?.lua;";
 
     lua_code_cache   on;
 
@@ -157,24 +159,25 @@ make && make install
 ```
 注意事项
  (1)set $module_conf 设定的为模块化配置的配置文件名，不加后缀.lua
- (2)module_conf在不同的location中可以使用不同的模块化配置文件
+ (2)module_conf在不同的location中可以使用不同的模块化配置文件，结构相同  名字不同
  (3)include文件封装的nginx配置指令，直接使用即可，不用修改
 ```
 
 
-##### (2)lua模块化配置test_module_conf.lua内容：
+##### (2)lua模块化配置：在安装目录的lua_module_conf文件夹下创建test_module_conf.lua
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E9%85%8D%E7%BD%AE%E6%9C%80%E5%90%8E.png)
 
-##### (3)自定义lua模块配置hello_body_config.lua内容：
-
+##### (3)自定义lua模块配置：在安装目录的lua_conf文件夹下创建的hello_body_config.lua
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E9%85%8D%E7%BD%AE2.png)
 
 
 #####  (4)运行结果：
-
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E9%85%8D%E7%BD%AE3.png)
 
-
+```
+ (1)产生定制的响应内容     （hello_body 模块作用）
+ (2)响应头中有期待的头部产生（hello_header模块作用）
+```
 
 ## 6. 赶快加几个模块试试吧 ^_^
 
