@@ -89,7 +89,7 @@ hello_body_content_handle函数为暴露给模块化的入口函数
 
 ######   (4)使用时需要配置模块化配置，规则如下图所示。
 模块化配置文件module_conf:
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A02.png)
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/module_conf%E5%AE%9E%E4%BE%8B.png)
 
 
 ```
@@ -154,13 +154,18 @@ make && make install
 
     }
 
+```
+注意事项
+ (1)set $module_conf 设定的为模块化配置的配置文件名，不加后缀.lua
+ (2)module_conf在不同的location中可以使用不同的模块化配置文件
+ (3)include文件封装的nginx配置指令，直接使用即可，不用修改
+```
 
 
-##### (2)lua模块化配置：
-
+##### (2)lua模块化配置test_module_conf.lua内容：
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E9%85%8D%E7%BD%AE%E6%9C%80%E5%90%8E.png)
 
-##### (3)自定义lua模块配置：
+##### (3)自定义lua模块配置hello_body_config.lua内容：
 
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E9%85%8D%E7%BD%AE2.png)
 
