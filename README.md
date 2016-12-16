@@ -36,29 +36,59 @@ openresty          ：原生开源代码
 
 ```
 
-## 3. 如何实现lua模块化
+lua-module-master 文件夹结构
 
-添加模块
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/20161216_lua_master%E7%BB%93%E6%9E%84.png)
 
-首先要在process_module/lua_module_master_modules.lua中注册需要添加的模块，如下图所示。
+```
 
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png)
+lua_conf         : 存放自定义lua模块的配置
 
-示例：
+lua_modules_conf : lua模块化的配置文件
 
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B.png)
+lua_include_conf : nginx include配置文件，将access_by_lua_file等指令封装
 
+process_module   :  模块化实现，存放各个阶段实现代码
 
+modules          :  存放自定义lua模块代码
 
-在lua-module-master文件夹中加入模块文件夹以及模块实现，如下图加入hello_module文件夹及其执行代码
+```
 
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A01.png)
+## 3. 添加自定义的lua模块
 
+######   (1)首先modules文件夹中创建lua模块文件夹,同时添加了两个lua模块，如下
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/1216%E8%87%AA%E5%AE%9A%E4%B9%89lua%E6%88%AA%E5%9B%BE.png)
 
+######   (2)其次在相应模块文件夹中加入模块实现代码
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E7%BB%93%E6%9E%84tree%E5%9B%BE.png)
+```
 
- 2.  配置文件
+后缀为.example的为此lua模块的示例配置，如无需配置则不写示例
 
-模块化配置文件  module_conf
+配置文件使用时将后缀去掉即可
+
+以hello_body模块为例，  helllo_body.lua为此模块的入口文件
+
+hello_body_content_handle函数为暴露给模块化的入口函数
+
+```
+
+入口文件:
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6.png)
+
+配置文件:
+![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%88%AA%E5%9B%BE.png)
+
+######   (3)最后要在process_module/lua_module_master_modules.lua中注册需要添加的模块，如下图所示。
+
+添加规则:
+![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E6%88%AA%E5%9B%BE.png)
+
+如何注册hello_header 以及hello_body模块:
+![image](https://github.com/BBD-RD/pictures_for_md/blob/master/modules%20%E6%B7%BB%E5%8A%A0.png)
+
+######   (4)使用时需要配置模块化配置，规则如下图所示。
+模块化配置文件module_conf:
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A02.png)
 
 
@@ -72,7 +102,7 @@ openresty          ：原生开源代码
 
 ```
 
-自定义模块配置，示例
+自定义lua模块配置，示例
 
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE.png)
 
@@ -101,32 +131,10 @@ make && make install
 
  *  默认安装目录为/usr/local/openresty，可 --prefix=   自定义安装目录
 
- * 安装完成后在nginx 目录下会生成一个lua_modules文件夹
+ * 安装完成后在nginx 目录下会生成一个lua_modules文件夹, 结构与lua-module-master相同
+ 
 
-
-
-## 5.lua_modules文件夹结构
-
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E5%AE%89%E8%A3%85%E5%90%8E%E7%BB%93%E6%9E%84.png)
-
-
-
-
-```
-
-hello_module       示例lua模块，设定响应内容与响应头
-
-lua_conf           lua模块的配置文件夹，存放各个lua功能模块的配置
-
-lua_modules_conf   存放lua模块化的配置文件
-
-lua_include_conf   存放include配置文件，将access_by_lua_file等指令封装
-
-process_module     模块化实现，存放各个阶段实现代码
-
-```
-
-## 6. 示例配置
+## 5. 示例配置
 
 **分三部分：nginx配置、模块化配置、模块配置(用上述hello 模块作为示例)**
 
@@ -150,13 +158,11 @@ process_module     模块化实现，存放各个阶段实现代码
 
 ##### (2)lua模块化配置：
 
- ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E9%85%8D%E7%BD%AE1.png)
+ ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E6%A8%A1%E5%9D%97%E5%8C%96%E9%85%8D%E7%BD%AE%E6%9C%80%E5%90%8E.png)
 
 ##### (3)自定义lua模块配置：
 
-
  ![image](https://github.com/BBD-RD/pictures_for_md/blob/master/%E9%85%8D%E7%BD%AE2.png)
-
 
 
 #####  (4)运行结果：
@@ -165,7 +171,7 @@ process_module     模块化实现，存放各个阶段实现代码
 
 
 
-## 7. 赶快加几个模块试试吧 ^_^
+## 6. 赶快加几个模块试试吧 ^_^
 
 
 
